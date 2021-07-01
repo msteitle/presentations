@@ -47,7 +47,41 @@ describe('WisdomGenerator', () => {
         expect(await screen.findByText(defaultQuotes[1].author, { exact: false })).toBeInTheDocument();
     });
 
-    it('will block additional requests until the active request completes', async () => Promise.reject());
+    it('will block additional requests until the active request completes', async () => {
+        render(<WisdomGenerator />);
 
-    it('displays a loading indicator while loading which disappears when load completes', async () => Promise.reject());
+        doFetch.mockImplementationOnce(() => {
+            setTimeout(() => {
+                Promise.resolve([...defaultQuotes]);
+            }, 5000);
+        });
+        // we need to use fake timers so that we can run all timers and simulate a response delay
+        jest.useFakeTimers();
+
+        fireEvent.click(screen.getByText(/receive wisdom/i));
+        doFetch.mockImplementationOnce(() => Promise.resolve([defaultQuotes[1]]));
+        fireEvent.click(screen.getByText(/receive wisdom/i));
+
+        jest.runAllTimers();
+        
+        expect(await screen.findByText(defaultQuotes[0].message)).toBeInTheDocument();
+        expect(screen.queryByText(defaultQuotes[1].message)).not.toBeInTheDocument();
+    });
+
+    it('displays a loading indicator while loading which disappears when load completes', async () => {
+        render(<WisdomGenerator />);
+
+        const toggle = screen.getByText(/receive wisdom/i);
+
+        doFetch.mockImplementationOnce(() => {
+            setTimeout(() => {
+                Promise.resolve([defaultQuotes[0]]);
+            }, 1000);
+        });
+
+        fireEvent.click(toggle);
+
+        expect(screen.getByLabelText('Loading indicator')).toBeInTheDocument();
+        expect(await screen.findByText(defaultQuotes[0].message)).toBeInTheDocument();
+    });
 });
