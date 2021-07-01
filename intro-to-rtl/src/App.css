@@ -1,0 +1,131 @@
+#root {
+  height: 100vh;
+  display: flex;
+}
+
+.App {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+header {
+  position: fixed;
+  top: 0;
+}
+
+.wisdomGenerator {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 120px;
+  overflow-y: visible;
+  width: 70%;
+}
+
+.wisdomGenerator figcaption {
+  text-align: right;
+}
+
+.wisdomGenerator .message {
+  line-height: 1.5;
+}
+
+.wisdomGenerator .author {
+  font-weight: bold;
+}
+.wisdomGenerator .message:before {
+  content: "\"";
+}
+.wisdomGenerator .message:after {
+  content: "\"";
+}
+.control button {
+  font-size: 16px;
+  padding: 10px 21px;
+  background-color: #bde;
+  border: 2px #68d outset;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .2s linear;
+}
+.control button:hover {
+  background-color: #cef;
+}
+.control button:active {
+  border-style: inset;
+}
+
+.loading-indicator {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.loading-indicator div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: #c55;
+  animation: loading-indicator 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.loading-indicator div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.loading-indicator div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.loading-indicator div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes loading-indicator {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
